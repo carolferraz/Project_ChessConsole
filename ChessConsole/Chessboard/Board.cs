@@ -1,4 +1,4 @@
-namespace Chessboard
+namespace ChessBoard
 {
     class Board
     {
@@ -15,6 +15,17 @@ namespace Chessboard
             Lines = lines;
             Columns = columns;
             _pieces = new Piece[Lines, Columns];
+        }
+
+        public Piece GetPiece(int line, int columns)
+        {
+            return _pieces[line, columns];
+        }
+
+        public void PlacePiece(Piece passedPiece, Position passedPosition)
+        {
+            _pieces[passedPosition.Line, passedPosition.Column] = passedPiece;
+            passedPiece.Position = passedPosition;
         }
     }
 }

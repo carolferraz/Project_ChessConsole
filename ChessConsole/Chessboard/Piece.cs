@@ -1,4 +1,4 @@
-namespace Chessboard
+namespace ChessBoard
 {
     class Piece
     {
@@ -11,11 +11,11 @@ namespace Chessboard
         {
         }
 
-        public Piece(Position position, Color color, Board board)
+        public Piece(Color color, Board board)
         {
-            Position = position;
             Color = color;
             Board = board;
+            Position = null;
             AmountMoves = 0;
         }
 
