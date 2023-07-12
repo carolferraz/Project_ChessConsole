@@ -7,18 +7,24 @@ namespace ChessConsole
     {
         static void Main(string[] args)
         {
-            try{
+            try
+            {
 
-            Board board = new Board(8, 8);
+                ChessGame game = new ChessGame();
 
-            board.PlacePiece(new King(Color.Black, board), new Position(0,0));
-            board.PlacePiece(new King(Color.Black, board), new Position(1,3));
-            board.PlacePiece(new Tower(Color.Black, board), new Position(2,4));
-            board.PlacePiece(new Tower(Color.Black, board), new Position(6,4));
-            board.PlacePiece(new King(Color.White, board), new Position(7,0));
-            board.PlacePiece(new King(Color.White, board), new Position(7,5));
+                while (!game.Finished)
+                {
+                    Console.Clear();
+                    Screen.ShowBoard(game.Board);
 
-            Screen.ShowBoard(board);
+                    Console.WriteLine("Origem: ");
+                    Position origin = Screen.ReadChessPosition();
+                    Console.WriteLine("Destino: ");
+                    Position destiny = Screen.ReadChessPosition();
+
+                    game.MakeAMove(origin, destiny);
+                }
+
 
             }
             catch (BoardException e)

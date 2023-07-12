@@ -1,5 +1,6 @@
 namespace ChessBoard
 {
+    //This class defines the structure of the board itself.
     class Board
     {
         public int Lines { get; set; }
@@ -40,6 +41,17 @@ namespace ChessBoard
             }
             _pieces[passedPosition.Line, passedPosition.Column] = passedPiece;
             passedPiece.Position = passedPosition;
+        }
+
+        public Piece RemovePiece(Position passedPosition)
+        {
+            if(GetPiece(passedPosition) == null) return null;
+            
+            Piece removedPiece = GetPiece(passedPosition);
+            removedPiece.Position = null;
+            _pieces[passedPosition.Line, passedPosition.Column] = null;
+            return removedPiece;
+            
         }
 
         public bool ValidPosition(Position position)    

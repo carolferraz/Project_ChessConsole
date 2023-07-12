@@ -2,6 +2,7 @@ using ChessBoard;
 
 namespace Chess
 {
+    //This class defines the positions of board as the user will see.
     class ChessPosition
     {
         public char ChessColumn { get; set; }
@@ -19,7 +20,7 @@ namespace Chess
 
         public Position ToPosition()
         {
-            return new Position(ChessLine - 8, ChessColumn - 'a');
+            return new Position(8 - ChessLine, ChessColumn - 'a');
         }
 
         public override string ToString()

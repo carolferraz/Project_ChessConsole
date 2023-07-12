@@ -1,3 +1,4 @@
+using Chess;
 using ChessBoard;
 
 namespace ChessConsole
@@ -23,6 +24,15 @@ namespace ChessConsole
             Console.WriteLine("  a b c d e f g h");
         }
 
+        public static Position ReadChessPosition()
+        {
+            string userPosition = Console.ReadLine();
+            char column = userPosition[0];
+            int line = int.Parse(userPosition[1] + " ");
+            
+            return new ChessPosition(column, line).ToPosition();
+
+        }
         public static void PrintPiece(Piece piece)
         {
             if (piece.Color == Color.White)

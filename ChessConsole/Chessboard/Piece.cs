@@ -19,5 +19,9 @@ namespace ChessBoard
             AmountMoves = 0;
         }
 
+        public void IncrementAmountMoves()
+        {
+            AmountMoves++;
+        }
     }
 }
