@@ -17,7 +17,6 @@ namespace ChessConsole
             board.PlacePiece(new Tower(Color.Black, board), new Position(6,4));
             board.PlacePiece(new King(Color.White, board), new Position(7,0));
             board.PlacePiece(new King(Color.White, board), new Position(7,5));
-            board.PlacePiece(new King(Color.White, board), new Position(6,8));
 
             Screen.ShowBoard(board);
 
