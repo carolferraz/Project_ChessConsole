@@ -23,6 +23,10 @@ namespace ChessBoard
         {
             AmountMoves++;
         }
+        public void DecrementAmountMoves()
+        {
+            AmountMoves--;
+        }
 
         public bool ThereIsPossibleMoves() //We create this method to check in the ChessGame, where are the mechanics of the game, if it will send a error in case that the piece is blocked.
         {

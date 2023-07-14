@@ -15,6 +15,12 @@ namespace ChessConsole
             Console.WriteLine();
             Console.Write("Actual player: " + game.ActualPlayer);
             Console.WriteLine();
+            if(game.Check)
+            {
+                Console.WriteLine(">> CHECK! <<");
+            }
+
+            Console.WriteLine();
         }
 
         public static void PrintCapturedPieces(ChessGame game)
@@ -57,7 +63,6 @@ namespace ChessConsole
         public static void ShowBoard(Board board, bool[,] isAPossibleMoves)
         {
             ConsoleColor originBg = Console.BackgroundColor;
-            ConsoleColor changedBg = ConsoleColor.DarkGray;
 
             for (int i = 0; i < board.Lines; i++)
             {
@@ -66,7 +71,7 @@ namespace ChessConsole
                 {
                     if (isAPossibleMoves[i, j])
                     {
-                        Console.BackgroundColor = changedBg;
+                        Console.BackgroundColor = ConsoleColor.DarkGray;
                     }
                     else
                     {
