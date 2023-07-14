@@ -7,8 +7,8 @@ namespace Chess
     class ChessGame
     {
         public Board Board { get; private set; }
-        private int Turn { get; set; }
-        private Color ActualPlayer { get; set; }
+        public int Turn { get; private set; }
+        public Color ActualPlayer { get; protected set; }
         public bool Finished { get; private set; }
 
         public ChessGame()
@@ -20,7 +20,7 @@ namespace Chess
             PlacePieces();
         }
 
-        public void MakeAMove(Position origin, Position destination)
+        public void ExecuteAMove(Position origin, Position destination)
         {
             Piece piece = Board.RemovePiece(origin);
             piece.IncrementAmountMoves();
@@ -28,6 +28,43 @@ namespace Chess
             Piece capturedPiece = Board.RemovePiece(destination);
 
             Board.PlacePiece(piece, destination);
+        }
+
+        public void MakeAMove(Position origin, Position destination)
+        {
+            ExecuteAMove(origin, destination);
+            Turn++;
+            ChangePlayer();
+        }
+
+        public void ValidateOriginPosition(Position position)
+        {
+            if(Board.GetPiece(position) == null)
+            {
+                throw new BoardException("There is no piece in this position. Try again!");
+            }
+            if(ActualPlayer != Board.GetPiece(position).Color)
+            {
+                throw new BoardException("You are trying to move a piece with the wrong color. Try again!");
+            }
+            if(!Board.GetPiece(position).ThereIsPossibleMoves())
+            {
+                throw new BoardException("Sorry, but this piece can't move. Try again!");
+            }
+        }
+
+
+        public void ValidadeDestinyPosition(Position origin, Position destiny)
+        {
+            if(!Board.GetPiece(origin).CanMoveTo(destiny))
+            {
+                throw new BoardException("This destiny position is not valid. Thay again!");
+            }
+        }
+
+        private void ChangePlayer()
+        {
+            ActualPlayer = ActualPlayer == Color.White ? Color.Black : Color.White;
         }
 
         public void PlacePieces()

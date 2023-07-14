@@ -24,56 +24,56 @@ namespace Chess
         {
             bool[,] matrix = new bool[Board.Lines, Board.Columns];
 
-            Position posiblePosition = new Position(0, 0);
+            Position possiblePosition = new Position(0, 0);
 
             //up
-            posiblePosition.DefineNewPosition(Position.Line - 1, Position.Column);
-            if (Board.ValidPosition(posiblePosition) && CanMove(posiblePosition))
+            possiblePosition.DefineNewPosition(Position.Line - 1, Position.Column);
+            if (Board.ValidPosition(possiblePosition) && CanMove(possiblePosition))
             {
-                matrix[posiblePosition.Line, posiblePosition.Column] = true;
+                matrix[possiblePosition.Line, possiblePosition.Column] = true;
             }
             //northest
-            posiblePosition.DefineNewPosition(Position.Line - 1, Position.Column + 1);
-            if (Board.ValidPosition(posiblePosition) && CanMove(posiblePosition))
+            possiblePosition.DefineNewPosition(Position.Line - 1, Position.Column + 1);
+            if (Board.ValidPosition(possiblePosition) && CanMove(possiblePosition))
             {
-                matrix[posiblePosition.Line, posiblePosition.Column] = true;
+                matrix[possiblePosition.Line, possiblePosition.Column] = true;
             }
             //right
-            posiblePosition.DefineNewPosition(Position.Line, Position.Column + 1);
-            if (Board.ValidPosition(posiblePosition) && CanMove(posiblePosition))
+            possiblePosition.DefineNewPosition(Position.Line, Position.Column + 1);
+            if (Board.ValidPosition(possiblePosition) && CanMove(possiblePosition))
             {
-                matrix[posiblePosition.Line, posiblePosition.Column] = true;
+                matrix[possiblePosition.Line, possiblePosition.Column] = true;
             }
             //southeast
-            posiblePosition.DefineNewPosition(Position.Line + 1, Position.Column + 1);
-            if (Board.ValidPosition(posiblePosition) && CanMove(posiblePosition))
+            possiblePosition.DefineNewPosition(Position.Line + 1, Position.Column + 1);
+            if (Board.ValidPosition(possiblePosition) && CanMove(possiblePosition))
             {
-                matrix[posiblePosition.Line, posiblePosition.Column] = true;
+                matrix[possiblePosition.Line, possiblePosition.Column] = true;
             }
 
             //down
-            posiblePosition.DefineNewPosition(Position.Line + 1, Position.Column);
-            if (Board.ValidPosition(posiblePosition) && CanMove(posiblePosition))
+            possiblePosition.DefineNewPosition(Position.Line + 1, Position.Column);
+            if (Board.ValidPosition(possiblePosition) && CanMove(possiblePosition))
             {
-                matrix[posiblePosition.Line, posiblePosition.Column] = true;
+                matrix[possiblePosition.Line, possiblePosition.Column] = true;
             }
             //southwest
-            posiblePosition.DefineNewPosition(Position.Line + 1, Position.Column - 1);
-            if (Board.ValidPosition(posiblePosition) && CanMove(posiblePosition))
+            possiblePosition.DefineNewPosition(Position.Line + 1, Position.Column - 1);
+            if (Board.ValidPosition(possiblePosition) && CanMove(possiblePosition))
             {
-                matrix[posiblePosition.Line, posiblePosition.Column] = true;
+                matrix[possiblePosition.Line, possiblePosition.Column] = true;
             }
             //left
-            posiblePosition.DefineNewPosition(Position.Line, Position.Column - 1);
-            if (Board.ValidPosition(posiblePosition) && CanMove(posiblePosition))
+            possiblePosition.DefineNewPosition(Position.Line, Position.Column - 1);
+            if (Board.ValidPosition(possiblePosition) && CanMove(possiblePosition))
             {
-                matrix[posiblePosition.Line, posiblePosition.Column] = true;
+                matrix[possiblePosition.Line, possiblePosition.Column] = true;
             }
             //northwest
-            posiblePosition.DefineNewPosition(Position.Line - 1, Position.Column - 1);
-            if (Board.ValidPosition(posiblePosition) && CanMove(posiblePosition))
+            possiblePosition.DefineNewPosition(Position.Line - 1, Position.Column - 1);
+            if (Board.ValidPosition(possiblePosition) && CanMove(possiblePosition))
             {
-                matrix[posiblePosition.Line, posiblePosition.Column] = true;
+                matrix[possiblePosition.Line, possiblePosition.Column] = true;
             }
 
 

@@ -14,24 +14,39 @@ namespace ChessConsole
 
                 while (!game.Finished)
                 {
-                    Console.Clear();
-                    Screen.ShowBoard(game.Board);
+                    try
+                    {
+                        Console.Clear();
+                        Screen.ShowBoard(game.Board);
 
-                    Console.WriteLine(" ");
-                    Console.Write("Origem: ");
-                    Position origin = Screen.ReadChessPosition();
+                        Console.WriteLine();
+                        Console.Write("Turn: " + game.Turn);
+                        Console.WriteLine();
+                        Console.Write("Actual player: " + game.ActualPlayer);
+                        Console.WriteLine(" ");
+                        Console.Write("Origin: ");
+                        Position origin = Screen.ReadChessPosition();
+                        game.ValidateOriginPosition(origin);
 
-                    bool[,] matrixWithPossibleMoves = game.Board.GetPiece(origin).PossibleMoves();
+                        bool[,] matrixWithPossibleMoves = game.Board.GetPiece(origin).PossibleMoves();
 
-                    Console.Clear();
-                    Screen.ShowBoard(game.Board, matrixWithPossibleMoves);
+                        Console.Clear();
+                        Screen.ShowBoard(game.Board, matrixWithPossibleMoves);
 
 
-                    Console.WriteLine(" ");
-                    Console.Write("Destino: ");
-                    Position destiny = Screen.ReadChessPosition();
-                    
-                    game.MakeAMove(origin, destiny);
+                        Console.WriteLine();
+                        Console.Write("Destiny: ");
+                        Position destiny = Screen.ReadChessPosition();
+                        game.ValidadeDestinyPosition(origin, destiny);
+
+                        game.MakeAMove(origin, destiny);
+                    }
+                    catch (BoardException e)
+                    {
+                        Console.WriteLine("Ops! " + e.Message);
+                        Console.ReadLine();
+
+                    }
                 }
 
 

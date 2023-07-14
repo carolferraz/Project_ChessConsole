@@ -24,6 +24,27 @@ namespace ChessBoard
             AmountMoves++;
         }
 
+        public bool ThereIsPossibleMoves() //We create this method to check in the ChessGame, where are the mechanics of the game, if it will send a error in case that the piece is blocked.
+        {
+            bool[,] moves = PossibleMoves();
+            for (int i = 0; i < Board.Lines; i++)
+            {
+                for (int j = 0; j < Board.Columns; j++)
+                {
+                    if (moves[i, j])
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool CanMoveTo(Position destiny)
+        {
+            return PossibleMoves()[destiny.Line, destiny.Column];
+        }
+
         public abstract bool[,] PossibleMoves();
     }
 }
