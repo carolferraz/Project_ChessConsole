@@ -1,5 +1,6 @@
 using Chess;
 using ChessBoard;
+using System.Collections.Generic;
 
 namespace Chess
 {
@@ -10,6 +11,9 @@ namespace Chess
         public int Turn { get; private set; }
         public Color ActualPlayer { get; protected set; }
         public bool Finished { get; private set; }
+        private HashSet<Piece> Pieces;
+        private HashSet<Piece> CapturedPieces;
+
 
         public ChessGame()
         {
@@ -17,6 +21,8 @@ namespace Chess
             Turn = 1;
             ActualPlayer = Color.White;
             Finished = false;
+            Pieces = new HashSet<Piece>();
+            CapturedPieces = new HashSet<Piece>();
             PlacePieces();
         }
 
@@ -28,6 +34,11 @@ namespace Chess
             Piece capturedPiece = Board.RemovePiece(destination);
 
             Board.PlacePiece(piece, destination);
+
+            if (capturedPiece != null)
+            {
+                CapturedPieces.Add(capturedPiece);
+            }
         }
 
         public void MakeAMove(Position origin, Position destination)
@@ -39,15 +50,15 @@ namespace Chess
 
         public void ValidateOriginPosition(Position position)
         {
-            if(Board.GetPiece(position) == null)
+            if (Board.GetPiece(position) == null)
             {
                 throw new BoardException("There is no piece in this position. Try again!");
             }
-            if(ActualPlayer != Board.GetPiece(position).Color)
+            if (ActualPlayer != Board.GetPiece(position).Color)
             {
                 throw new BoardException("You are trying to move a piece with the wrong color. Try again!");
             }
-            if(!Board.GetPiece(position).ThereIsPossibleMoves())
+            if (!Board.GetPiece(position).ThereIsPossibleMoves())
             {
                 throw new BoardException("Sorry, but this piece can't move. Try again!");
             }
@@ -56,7 +67,7 @@ namespace Chess
 
         public void ValidadeDestinyPosition(Position origin, Position destiny)
         {
-            if(!Board.GetPiece(origin).CanMoveTo(destiny))
+            if (!Board.GetPiece(origin).CanMoveTo(destiny))
             {
                 throw new BoardException("This destiny position is not valid. Thay again!");
             }
@@ -67,32 +78,53 @@ namespace Chess
             ActualPlayer = ActualPlayer == Color.White ? Color.Black : Color.White;
         }
 
+        public HashSet<Piece> CapturedPiecesByColor(Color color)
+        {
+            HashSet<Piece> piecesCapturedByColor = new HashSet<Piece>();
+
+            foreach (Piece piece in CapturedPieces)
+            {
+                if (color == piece.Color)
+                {
+                    piecesCapturedByColor.Add(piece);
+                }
+            }
+
+            return piecesCapturedByColor;
+        }
+        public HashSet<Piece> PiecesInTheGameByColor(Color color)
+        {
+            HashSet<Piece> piecesInTheGameByColor = new HashSet<Piece>();
+
+            foreach (Piece piece in Pieces)
+            {
+                if (color == piece.Color)
+                {
+                    piecesInTheGameByColor.Add(piece);
+                }
+            }
+
+            piecesInTheGameByColor.ExceptWith(CapturedPiecesByColor(color));
+            return piecesInTheGameByColor;
+        }
+
+        private void CreateNewPiece(char column, int line, Piece piece)
+        {
+            Board.PlacePiece(piece, new ChessPosition(column, line).ToPosition());
+            Pieces.Add(piece);
+        }
+
         public void PlacePieces()
         {
             //White pieces
-            // Board.PlacePiece(new Pawn(Color.White, Board), new ChessPosition('a', 2).ToPosition());
-            // Board.PlacePiece(new Pawn(Color.White, Board), new ChessPosition('b', 2).ToPosition());
-            // Board.PlacePiece(new Pawn(Color.White, Board), new ChessPosition('c', 2).ToPosition());
-            // Board.PlacePiece(new Pawn(Color.White, Board), new ChessPosition('d', 2).ToPosition());
-            // Board.PlacePiece(new Pawn(Color.White, Board), new ChessPosition('e', 2).ToPosition());
-            // Board.PlacePiece(new Pawn(Color.White, Board), new ChessPosition('f', 2).ToPosition());
-            // Board.PlacePiece(new Pawn(Color.White, Board), new ChessPosition('g', 2).ToPosition());
-            // Board.PlacePiece(new Pawn(Color.White, Board), new ChessPosition('h', 2).ToPosition());
-            Board.PlacePiece(new Tower(Color.White, Board), new ChessPosition('a', 1).ToPosition());
-            Board.PlacePiece(new Tower(Color.White, Board), new ChessPosition('h', 1).ToPosition());
-            Board.PlacePiece(new King(Color.White, Board), new ChessPosition('d', 1).ToPosition());
+            CreateNewPiece('a', 2, new Tower(Color.White, Board));
+            CreateNewPiece('b', 2, new Tower(Color.White, Board));
+            CreateNewPiece('c', 2, new Tower(Color.White, Board));
+            CreateNewPiece('d', 2, new Tower(Color.White, Board));
 
             //Black pieces
-            // Board.PlacePiece(new Pawn(Color.Black, Board), new ChessPosition('a', 7).ToPosition());
-            // Board.PlacePiece(new Pawn(Color.Black, Board), new ChessPosition('b', 7).ToPosition());
-            // Board.PlacePiece(new Pawn(Color.Black, Board), new ChessPosition('c', 7).ToPosition());
-            // Board.PlacePiece(new Pawn(Color.Black, Board), new ChessPosition('d', 7).ToPosition());
-            // Board.PlacePiece(new Pawn(Color.Black, Board), new ChessPosition('e', 7).ToPosition());
-            // Board.PlacePiece(new Pawn(Color.Black, Board), new ChessPosition('f', 7).ToPosition());
-            // Board.PlacePiece(new Pawn(Color.Black, Board), new ChessPosition('g', 7).ToPosition());
-            Board.PlacePiece(new King(Color.Black, Board), new ChessPosition('h', 7).ToPosition());
-
-            Board.PlacePiece(new Tower(Color.Black, Board), new ChessPosition('h', 8).ToPosition());
+            CreateNewPiece('a', 7, new Tower(Color.Black, Board));
+            CreateNewPiece('h', 7, new Tower(Color.Black, Board));
 
         }
 

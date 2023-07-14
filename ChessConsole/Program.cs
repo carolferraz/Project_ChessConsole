@@ -17,13 +17,8 @@ namespace ChessConsole
                     try
                     {
                         Console.Clear();
-                        Screen.ShowBoard(game.Board);
-
+                        Screen.PrintGame(game);
                         Console.WriteLine();
-                        Console.Write("Turn: " + game.Turn);
-                        Console.WriteLine();
-                        Console.Write("Actual player: " + game.ActualPlayer);
-                        Console.WriteLine(" ");
                         Console.Write("Origin: ");
                         Position origin = Screen.ReadChessPosition();
                         game.ValidateOriginPosition(origin);
