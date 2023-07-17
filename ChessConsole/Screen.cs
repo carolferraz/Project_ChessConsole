@@ -13,13 +13,20 @@ namespace ChessConsole
             Console.WriteLine();
             Console.Write("Turn: " + game.Turn);
             Console.WriteLine();
-            Console.Write("Actual player: " + game.ActualPlayer);
-            Console.WriteLine();
-            if(game.Check)
+            if (!game.Finished)
             {
-                Console.WriteLine(">> CHECK! <<");
+                Console.Write("Actual player: " + game.ActualPlayer);
+                Console.WriteLine();
+                if (game.Check)
+                {
+                    Console.WriteLine(">> CHECK! <<");
+                }
             }
-
+            else
+            {
+                Console.WriteLine(">> CHECKMATE! <<");
+                Console.WriteLine(game.ActualPlayer + " is the winner!");
+            }
             Console.WriteLine();
         }
 
@@ -35,7 +42,7 @@ namespace ChessConsole
             Console.ForegroundColor = ConsoleColor.DarkYellow;
             PrintPiecesInTheCollection(game.CapturedPiecesByColor(Color.Black));
             Console.ForegroundColor = originColor;
-           }
+        }
 
         public static void PrintPiecesInTheCollection(HashSet<Piece> collection)
         {

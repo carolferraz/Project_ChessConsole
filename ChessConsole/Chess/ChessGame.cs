@@ -74,8 +74,16 @@ namespace Chess
             else Check = false;
 
 
-            Turn++;
-            ChangePlayer();
+            if (IsInCheckMate(Adversary(ActualPlayer)))
+            {
+                Finished = true;
+            }
+            else
+            {
+                Turn++;
+                ChangePlayer();
+            }
+
         }
 
         public void ValidateOriginPosition(Position position)
@@ -158,11 +166,13 @@ namespace Chess
 
         public bool IsInCheck(Color color)
         {
+            //If there is no king with this color on the board, we throw a message telling this to the user.
             Piece king = King(color) ?? throw new BoardException("There is no " + color + " king in the game.");
 
 
-            foreach (Piece piece in PiecesInTheGameByColor(Adversary(color)))
+            foreach (Piece piece in PiecesInTheGameByColor(Adversary(color))) //Here we are checking in the true moves of all adversary pieces if there is some that can match with the king position. If there is one, it will return true, if it look in all the matrix and there is none, it will return false.
             {
+
                 bool[,] matrix = piece.PossibleMoves();
                 if (matrix[king.Position.Line, king.Position.Column])
                 {
@@ -170,6 +180,39 @@ namespace Chess
                 }
             }
             return false;
+        }
+
+        public bool IsInCheckMate(Color color)
+        {
+            if (!IsInCheck(color)) return false;
+
+            foreach (Piece piece in PiecesInTheGameByColor(color)) //Here we will go through all the pieces in the game an check in the possible moves (only the true ones), if if can make a move that will change the status of IsInCheck. If it changes, we need to Undo the move, and replace the captured piece on the board.
+            {
+                bool[,] matrix = piece.PossibleMoves();
+                for (int i = 0; i < Board.Lines; i++)
+                {
+                    for (int j = 0; j < Board.Columns; j++)
+                    {
+                        if (matrix[i, j])
+                        {
+                            Position origin = piece.Position;
+                            Position destiny = new Position(i, j);
+                            Piece capturedPiece = ExecuteAMove(origin, destiny);
+                            bool stillInCheck = IsInCheck(color);
+                            UndoAMove(origin, destiny, capturedPiece);
+
+                            if (!stillInCheck)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+
+                }
+
+            }
+
+            return true;
         }
 
         private void CreateNewPiece(char column, int line, Piece piece)
@@ -181,16 +224,15 @@ namespace Chess
         public void PlacePieces()
         {
             //White pieces
-            CreateNewPiece('a', 2, new Tower(Color.White, Board));
-            CreateNewPiece('b', 2, new Tower(Color.White, Board));
+           
             CreateNewPiece('c', 2, new Tower(Color.White, Board));
-            CreateNewPiece('d', 2, new Tower(Color.White, Board));
+            CreateNewPiece('d', 7, new Tower(Color.White, Board));
             CreateNewPiece('d', 1, new King(Color.White, Board));
 
             //Black pieces
             CreateNewPiece('a', 7, new Tower(Color.Black, Board));
             CreateNewPiece('h', 7, new Tower(Color.Black, Board));
-            CreateNewPiece('d', 7, new King(Color.Black, Board));
+            CreateNewPiece('a', 8, new King(Color.Black, Board));
 
         }
 
