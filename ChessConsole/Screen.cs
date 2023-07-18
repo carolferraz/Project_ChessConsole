@@ -1,5 +1,6 @@
 using Chess;
 using ChessBoard;
+using System;
 
 namespace ChessConsole
 {
@@ -11,7 +12,7 @@ namespace ChessConsole
             Console.WriteLine();
             PrintCapturedPieces(game);
             Console.WriteLine();
-            Console.Write("Turn: " + game.Turn);
+            Console.Write("Round: " + game.Round);
             Console.WriteLine();
             if (!game.Finished)
             {
@@ -100,7 +101,6 @@ namespace ChessConsole
             int line = int.Parse(userPosition[1] + " ");
 
             return new ChessPosition(column, line).ToPosition();
-
         }
         public static void PrintPiece(Piece piece)
         {

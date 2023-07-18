@@ -2,15 +2,15 @@ using ChessBoard;
 
 namespace Chess
 {
-    class Tower : Piece
+    class Rook : Piece
     {
-        public Tower(Color color, Board board) : base(color, board)
+        public Rook(Color color, Board board) : base(color, board)
         {
         }
 
         public override string ToString()
         {
-            return "T";
+            return "R";
         }
 
         private bool CanMove(Position position)

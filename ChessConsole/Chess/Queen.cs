@@ -1,43 +1,122 @@
-// using ChessBoard;
+using ChessBoard;
 
-// namespace Chess
-// {
-//     class Queen : Piece
-//     {
-//         public Queen(Color color, Board board) : base(color, board)
-//         { 
-//         }
+namespace Chess
+{
+    class Queen : Piece
+    {
+        public Queen(Color color, Board board) : base(color, board)
+        {
+        }
 
-//         public override string ToString()
-//         {
-//             return "Q";
-//         }
-//         private bool CanMove(Position position)
-//         {
+        public override string ToString()
+        {
+            return "Q";
+        }
+        private bool CanMove(Position position)
+        {
 
-//             Piece piece = Board.GetPiece(position);
-//             return piece != null || piece.Color != this.Color;
-//         }
+            Piece piece = Board.GetPiece(position);
+            return piece == null || piece.Color != this.Color;
+        }
 
-//         public override bool[,] PossibleMoves()
-//         {
-//             bool[,] matrix = new bool[Board.Lines, Board.Columns];
+        public override bool[,] PossibleMoves()
+        {
+            bool[,] matrix = new bool[Board.Lines, Board.Columns];
 
-//             Position posiblePosition = new Position(0, 0);
+            Position possiblePosition = new Position(0, 0);
 
-//             //up
-//             posiblePosition.DefineNewPosition(Position.Line - 1, Position.Column);
-//             while (Board.ValidPosition(posiblePosition) && CanMove(posiblePosition))
-//             {
-//                 matrix[Position.Line, Position.Column] = true;
-//                 if (Board.GetPiece(posiblePosition) != null && Board.GetPiece(posiblePosition).Color != this.Color)
-//                 {
-//                     break;
-//                 }
-//                 posiblePosition.Line = Position.Line - 1;
-//             }
+            //up
+            possiblePosition.DefineNewPosition(Position.Line - 1, Position.Column);
+            while (Board.ValidPosition(possiblePosition) && CanMove(possiblePosition))
+            {
+                matrix[possiblePosition.Line, possiblePosition.Column] = true;
+                if (Board.GetPiece(possiblePosition) != null && Board.GetPiece(possiblePosition).Color != this.Color)
+                {
+                    break;
+                }
+                possiblePosition.Line = possiblePosition.Line - 1;
+            }
+            //diagonal northeast
+            possiblePosition.DefineNewPosition(Position.Line - 1, Position.Column + 1);
+            while (Board.ValidPosition(possiblePosition) && CanMove(possiblePosition))
+            {
+                matrix[possiblePosition.Line, possiblePosition.Column] = true;
+                if (Board.GetPiece(possiblePosition) != null && Board.GetPiece(possiblePosition).Color != this.Color)
+                {
+                    break;
+                }
+                possiblePosition.DefineNewPosition(possiblePosition.Line - 1, possiblePosition.Column + 1);
+            }
+            //left
+            possiblePosition.DefineNewPosition(Position.Line, Position.Column + 1);
+            while (Board.ValidPosition(possiblePosition) && CanMove(possiblePosition))
+            {
+                matrix[possiblePosition.Line, possiblePosition.Column] = true;
+                if (Board.GetPiece(possiblePosition) != null && Board.GetPiece(possiblePosition).Color != this.Color)
+                {
+                    break;
+                }
+                possiblePosition.Column = possiblePosition.Column + 1;
+            }
+            //diagonal southeast
+            possiblePosition.DefineNewPosition(Position.Line + 1, Position.Column + 1);
+            while (Board.ValidPosition(possiblePosition) && CanMove(possiblePosition))
+            {
+                matrix[possiblePosition.Line, possiblePosition.Column] = true;
+                if (Board.GetPiece(possiblePosition) != null && Board.GetPiece(possiblePosition).Color != this.Color)
+                {
+                    break;
+                }
+                possiblePosition.DefineNewPosition(possiblePosition.Line + 1, possiblePosition.Column + 1);
 
-//             return matrix;
-//         }
-//     }
-// }
+            }
+            //down
+            possiblePosition.DefineNewPosition(Position.Line + 1, Position.Column);
+            while (Board.ValidPosition(possiblePosition) && CanMove(possiblePosition))
+            {
+                matrix[possiblePosition.Line, possiblePosition.Column] = true;
+                if (Board.GetPiece(possiblePosition) != null && Board.GetPiece(possiblePosition).Color != this.Color)
+                {
+                    break;
+                }
+                possiblePosition.Line = possiblePosition.Line + 1;
+            }
+            //diagonal southwest
+            possiblePosition.DefineNewPosition(Position.Line + 1, Position.Column - 1);
+            while (Board.ValidPosition(possiblePosition) && CanMove(possiblePosition))
+            {
+                matrix[possiblePosition.Line, possiblePosition.Column] = true;
+                if (Board.GetPiece(possiblePosition) != null && Board.GetPiece(possiblePosition).Color != this.Color)
+                {
+                    break;
+                }
+                possiblePosition.DefineNewPosition(possiblePosition.Line + 1, possiblePosition.Column - 1);
+            }
+            //right
+            possiblePosition.DefineNewPosition(Position.Line, Position.Column - 1);
+            while (Board.ValidPosition(possiblePosition) && CanMove(possiblePosition))
+            {
+                matrix[possiblePosition.Line, possiblePosition.Column] = true;
+                if (Board.GetPiece(possiblePosition) != null && Board.GetPiece(possiblePosition).Color != this.Color)
+                {
+                    break;
+                }
+                possiblePosition.Column = possiblePosition.Column - 1;
+            }
+            //Diagonal northwest
+            possiblePosition.DefineNewPosition(Position.Line - 1, Position.Column - 1);
+            while (Board.ValidPosition(possiblePosition) && CanMove(possiblePosition))
+            {
+                matrix[possiblePosition.Line, possiblePosition.Column] = true;
+                if (Board.GetPiece(possiblePosition) != null && Board.GetPiece(possiblePosition).Color != this.Color)
+                {
+                    break;
+                }
+                possiblePosition.DefineNewPosition(possiblePosition.Line - 1, possiblePosition.Column - 1);
+
+            }
+
+            return matrix;
+        }
+    }
+}

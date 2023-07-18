@@ -7,6 +7,7 @@ namespace ChessConsole
     {
         static void Main(string[] args)
         {
+            
             try
             {
 
@@ -50,6 +51,14 @@ namespace ChessConsole
             catch (BoardException e)
             {
                 Console.WriteLine("Ops, we found an error: " + e.Message);
+            }
+            catch (FormatException e)
+            {
+                Console.WriteLine("Format error: " + e.Message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Unexpected error: " + e.Message);
             }
             Console.ReadLine();
 
