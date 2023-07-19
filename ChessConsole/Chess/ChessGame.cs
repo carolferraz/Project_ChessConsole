@@ -213,6 +213,7 @@ namespace Chess
             {
                 throw new BoardException("Sorry, but this piece can't move. Try again!");
             }
+            
         }
 
 

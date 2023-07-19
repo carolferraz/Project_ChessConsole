@@ -96,9 +96,29 @@ namespace ChessConsole
 
         public static Position ReadChessPosition()
         {
+            char[] validColumns = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' };
+            char[] validLines = { '1', '2', '3', '4', '5', '6', '7', '8' };
+
             string userPosition = Console.ReadLine();
+
+            if (userPosition.Length != 2)
+            {
+                throw new BoardException("Something went wrong. Looks like this is the wrong format. Try again!");
+            }
+
+            if (!validColumns.Contains(userPosition[0]) || !validLines.Contains(userPosition[1]))
+            {
+                throw new BoardException("Something went wrong. Looks like this is the wrong format. Try again!");
+            }
+
             char column = userPosition[0];
             int line = int.Parse(userPosition[1] + " ");
+
+            // if(column.GetType() != typeof(char) || line.GetType() != typeof(int))
+            // {
+            //     throw new BoardException("Something went wrong. Looks like this is the wrong format. Try again!");
+            // }
+
 
             return new ChessPosition(column, line).ToPosition();
         }
